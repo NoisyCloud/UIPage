@@ -54,11 +54,11 @@ button {
     background-color: #d13a30;
 }
 
-.gray-label {
-    color: #bebebe;
-    font-size: 1rem;
+.gray-label { 
+    color: #bebebe; 
+    font-size: 1rem; 
 }
 
-.reading {
+.reading { 
     font-size: 1.8rem;
 }
