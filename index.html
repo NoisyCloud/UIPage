@@ -13,7 +13,7 @@
 <body>    
     
     <div class="topnav">
-        <h1>GUAMA 6</h1>
+        <h1>GUAMA 6.1</h1>
     </div>
     <div class="content">
         <div class="card-grid">
@@ -99,11 +99,17 @@
     const timestampContainer = document.getElementById('timestamp');
 
     //Define BLE Device Specs
-    var deviceName ='ESP32';
-    var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
-    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-    var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
-
+    var deviceName ='GUAMA';
+    var bleService = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var sensorCharacteristic= 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var demoLedCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var ledCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';    
+    var vibrationCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var buzzerCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var minutesSitCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var minutesUpCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    var minutesPauseCharacteristic = 'abd5ca15-7caa-4471-934f-4291003f420a';
+    
     //Global Variables to Handle Bluetooth
     var bleServer;
     var bleServiceFound;
@@ -194,7 +200,7 @@
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
-            bleServiceFound.getCharacteristic(ledCharacteristic)
+            bleServiceFound.getCharacteristic(demoLedCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
                 const data = new Uint8Array([value]);
@@ -202,7 +208,7 @@
             })
             .then(() => {
                 latestValueSent.innerHTML = value;
-                console.log("Value written to LEDcharacteristic:", value);
+                console.log("Value written to demoLedCharacteristic:", value);
             })
             .catch(error => {
                 console.error("Error writing to the LED characteristic: ", error);
