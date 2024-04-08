@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GUAMA Web BLE App</title>
+    <title>ESP32 Web BLE App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
-
-   
 </head>
-    
-<body>    
-    
+<body>
     <div class="topnav">
-        <h1>GUAMA 6.1</h1>
+        <h1>GUAMA 6</h1>
     </div>
     <div class="content">
         <div class="card-grid">
@@ -32,48 +28,6 @@
                 <p class="gray-label">Last reading: <span id="timestamp"></span></p>
             </div>
 
-             <div class="card">
-                <h2>Timers</h2>
-                 <form action="/action_page.php">
-                  <p label for="sitting">Sitting Time</label>
-                  <input type="number" id="sitting" name="sittingtime" placeholder="Minutes Sitting before Alarm"></p>
-                
-                  <p label for="getup">Get Up Time</label>
-                  <input type="number" id="getup" name="getuptime" placeholder="Minutes Up Before Sitting"></p>   
-                     
-                  <p label for="pause">Pause Time</label>
-                  <input type="number" id="pause" name="pausetime" placeholder="Minutes Pause Alarm"></p>
-                
-                  <p input type="submit" value="Submit"></p>
-                </form>
-             </div>   
-            <div class="card">
-                <h2>Vibration</h2>
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-                <p class="gray-label">Turn Vibration Alarm: <span id="valueSent"></span></p>
-            </div>
-                            
-             <div class="card">
-                <h2>Buzzer</h2>
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-                <p class="gray-label">Turn Buzzer Alarm: <span id="valueSent"></span></p>
-            </div>    
-            
-             <div class="card">
-                <h2>LED's</h2>
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-                <p class="gray-label">Turn Lights Alarm: <span id="valueSent"></span></p>
-            </div>
-                        
             <div class="card">
                 <h2>Control GPIO 13</h2>
                 <button id="onButton" class="onButton">ON</button>
@@ -99,18 +53,11 @@
     const timestampContainer = document.getElementById('timestamp');
 
     //Define BLE Device Specs
-    var deviceName ='GUAMA';
-    var bleService = 'abd5ca15-7caa-4471-934f-4291003f420a';
-    var sensorCharacteristic= '260bab0f-730b-4049-9d28-a79ce8c18844';
-    var demoLedCharacteristic = 'be05715d-8068-4952-9bce-de84d7b65665';
-    <!--
-    var ledCharacteristic = 'cc4a034f-6abd-4b77-b9c0-9163a170fab7';    
-    var vibrationCharacteristic = '876aff8f-458a-45cf-8884-446ca8cfe9a0';
-    var buzzerCharacteristic = 'a3d3f840-a271-4993-b326-4a5273f1378d';
-    var minutesSitCharacteristic = '8bc91529-cc34-496d-b2ba-9754fc8764e5';
-    var minutesUpCharacteristic = '00b9963a-2d74-4ea7-b374-30f7c13f65d9';
-    var minutesPauseCharacteristic = 'a510f931-0f35-41ae-a294-3bdb75017b7c'; 
-    -->
+    var deviceName ='ESP32';
+    var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
+    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
+    var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+
     //Global Variables to Handle Bluetooth
     var bleServer;
     var bleServiceFound;
@@ -201,7 +148,7 @@
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
-            bleServiceFound.getCharacteristic(demoLedCharacteristic)
+            bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
                 const data = new Uint8Array([value]);
@@ -209,7 +156,7 @@
             })
             .then(() => {
                 latestValueSent.innerHTML = value;
-                console.log("Value written to demoLedCharacteristic:", value);
+                console.log("Value written to LEDcharacteristic:", value);
             })
             .catch(error => {
                 console.error("Error writing to the LED characteristic: ", error);
