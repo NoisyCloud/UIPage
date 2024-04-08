@@ -65,6 +65,22 @@
                 </label>
                 <p class="gray-label">Turn Lights Alarm: <span id="valueSent"></span></p>
             </div>
+
+             <div class="card">
+                <h2>Timers</h2>
+                 <form action="/action_page.php">
+                  <label for="sitting">Sitting Time</label>
+                  <input type="number" id="sitting" name="sittingtime" placeholder="Total Minutes Sitting">
+                
+                  <label for="getup">Get Up Time</label>
+                  <input type="number" id="getup" name="getuptime" placeholder="Total Minutes Being Up">   
+                     
+                  <label for="pause">Pause Time</label>
+                  <input type="number" id="pause" name="pausetime" placeholder="Total Minutes To Pause Alarm">
+                
+                  <input type="submit" value="Submit">
+                </form>
+             </div>   
         </div>
     </div>
     <div class="footer">
