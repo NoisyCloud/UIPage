@@ -32,13 +32,21 @@
                 <p class="gray-label">Last reading: <span id="timestamp"></span></p>
             </div>
 
-            <div class="card">
-                <h2>Control GPIO 13</h2>
-                <button id="onButton" class="onButton">ON</button>
-                <button id="offButton" class="offButton">OFF</button>
-                <p class="gray-label">Last value sent: <span id="valueSent"></span></p>
-            </div>
-            
+             <div class="card">
+                <h2>Timers</h2>
+                 <form action="/action_page.php">
+                  <p label for="sitting">Sitting Time</label>
+                  <input type="number" id="sitting" name="sittingtime" placeholder="Minutes Sitting before Alarm"></p>
+                
+                  <p label for="getup">Get Up Time</label>
+                  <input type="number" id="getup" name="getuptime" placeholder="Minutes Up Before Sitting"></p>   
+                     
+                  <p label for="pause">Pause Time</label>
+                  <input type="number" id="pause" name="pausetime" placeholder="Minutes Pause Alarm"></p>
+                
+                  <p input type="submit" value="Submit"></p>
+                </form>
+             </div>   
             <div class="card">
                 <h2>Vibration</h2>
                 <label class="switch">
@@ -65,22 +73,13 @@
                 </label>
                 <p class="gray-label">Turn Lights Alarm: <span id="valueSent"></span></p>
             </div>
-
-             <div class="card">
-                <h2>Timers</h2>
-                 <form action="/action_page.php">
-                  <p label for="sitting">Sitting Time</label>
-                  <input type="number" id="sitting" name="sittingtime" placeholder="Minutes Sitting before Alarm"></p>
-                
-                  <p label for="getup">Get Up Time</label>
-                  <input type="number" id="getup" name="getuptime" placeholder="Minutes Up Before Sitting"></p>   
-                     
-                  <p label for="pause">Pause Time</label>
-                  <input type="number" id="pause" name="pausetime" placeholder="Minutes Pause Alarm"></p>
-                
-                  <p input type="submit" value="Submit"></p>
-                </form>
-             </div>   
+                        
+            <div class="card">
+                <h2>Control GPIO 13</h2>
+                <button id="onButton" class="onButton">ON</button>
+                <button id="offButton" class="offButton">OFF</button>
+                <p class="gray-label">Last value sent: <span id="valueSent"></span></p>
+            </div>
         </div>
     </div>
     <div class="footer">
