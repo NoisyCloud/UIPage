@@ -62,7 +62,7 @@
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
 
-    
+
     //Define BLE Device Specs
     var deviceName ='ESP32';
     var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
@@ -165,8 +165,8 @@
             bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
+                const dataLED = new Uint8Array([value]);
+                return characteristic.writeValue(dataLED);
             })
             .then(() => {
                 latestValueSent.innerHTML = value;
@@ -186,8 +186,8 @@
             bleServiceFound.getCharacteristic(vibeCharacteristic)
             .then(characteristic => {
                 console.log("Found the vibe characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
+                const dataVibe = new Uint8Array([value]);
+                return characteristic.writeValue(dataVibe);
             })
             .then(() => {
                 latestValueSentVibe.innerHTML = value;
