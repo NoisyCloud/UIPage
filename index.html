@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ESP32 Web BLE App</title>
+    <title>GUAMA Web BLE App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="topnav">
-        <h1>GUAMA 6</h1>
+        <h1>GUAMA 6a</h1>
     </div>
     <div class="content">
         <div class="card-grid">
@@ -34,6 +34,13 @@
                 <button id="offButton" class="offButton">OFF</button>
                 <p class="gray-label">Last value sent: <span id="valueSent"></span></p>
             </div>
+
+            <div class="card">
+                <h2>Control VIBE 26</h2>
+                <button id="onButtonVibe" class="onButtonVibe">ON</button>
+                <button id="offButtonVibe" class="offButtonVibe">OFF</button>
+                <p class="gray-label">Last value sent: <span id="valueSentVibe"></span></p>
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -47,16 +54,20 @@
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
+    const onButtonVibe = document.getElementById('onButtonVibe');
+    const offButtonVibe = document.getElementById('offButtonVibe');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
+    const latestValueSentVibe = document.getElementById('valueSentVibe');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
 
     //Define BLE Device Specs
     var deviceName ='ESP32';
     var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
-    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
     var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
+    var vibeCharacteristic = '19b10003-e8f2-537e-4f6c-d104768a1214';
 
     //Global Variables to Handle Bluetooth
     var bleServer;
@@ -76,6 +87,8 @@
     // Write to the ESP32 LED Characteristic
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
+    onButtonVibe.addEventListener('click', () => writeOnCharacteristicVibe(1));
+    offButtonVibe.addEventListener('click', () => writeOnCharacteristicVibe(0));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
@@ -160,6 +173,27 @@
             })
             .catch(error => {
                 console.error("Error writing to the LED characteristic: ", error);
+            });
+        } else {
+            console.error ("Bluetooth is not connected. Cannot write to characteristic.")
+            window.alert("Bluetooth is not connected. Cannot write to characteristic. \n Connect to BLE first!")
+        }
+    }
+
+    function writeOnCharacteristicVibe(value){
+        if (bleServer && bleServer.connected) {
+            bleServiceFound.getCharacteristic(vibeCharacteristic)
+            .then(characteristic => {
+                console.log("Found the vibe characteristic: ", characteristic.uuid);
+                const data = new Uint8Array([value]);
+                return characteristic.writeValue(data);
+            })
+            .then(() => {
+                latestValueSentVibe.innerHTML = value;
+                console.log("Value written to VIBE characteristic:", value);
+            })
+            .catch(error => {
+                console.error("Error writing to the VIBE characteristic: ", error);
             });
         } else {
             console.error ("Bluetooth is not connected. Cannot write to characteristic.")
